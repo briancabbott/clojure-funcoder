@@ -1,0 +1,3 @@
+This is a mix of things...  
+   - 1 part something to start cranking on some Clojure again, 
+   - 1 part legit idea I had while driving up to Park City today (6/4/2020).
