@@ -1,0 +1,38 @@
+buildscript {
+  repositories { jcenter() }
+  repositories { maven { url 'http://clojars.org/repo' } }
+  dependencies { classpath 'com.netflix.nebula:gradle-rxjava-project-plugin:1.12.+' }
+  repositories { maven { url 'http://dl.bintray.com/nebula/gradle-plugins' } } // Unlink nebula-clojure is linked to jcenter
+  dependencies { classpath 'com.netflix.nebula:nebula-clojure-plugin:1.12.+' }
+}
+
+apply plugin: 'rxjava-project'
+apply plugin: 'nebula-clojure'
+
+clojure {
+    warnOnReflection = true
+    aotCompile = false
+}
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.0.+'
+    compile 'org.clojure:clojure:1.5.1'
+    
+    examplesCompile 'clj-http:clj-http:0.6.4' // https://clojars.org/clj-http
+}
+
+/*
+ * Add Counterclockwise and include 'testCompile' dependencies
+ */
+eclipse {
+  project {
+    natures "ccw.nature"
+  }
+}
+
+/*
+tasks.clojureTest {
+    classpath = classpath + configurations.testCompile
+}
+*/
+
