@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Distribution License v. 1.0, which is available at
+    http://www.eclipse.org/org/documents/edl-v10.php.
+
+    SPDX-License-Identifier: BSD-3-Clause
+
+-->
+
+<!DOCTYPE book [
+<!ENTITY % ents SYSTEM "docbook.ent">
+%ents;
+]>
+<section version="5.0"
+         xml:id="deployment-jaxb-on-jpms"
+         xml:lang="en" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1999/xhtml"
+         xmlns:ns3="http://www.w3.org/2000/svg"
+         xmlns:ns="http://docbook.org/ns/docbook"
+         xmlns:m="http://www.w3.org/1998/Math/MathML">
+    <title>Using &binding.impl.name; on JPMS</title>
+
+    <para>JavaSE 11 features <link xmlns:xlink="http://openjdk.java.net/projects/jigsaw/spec/">JSR 376 Java Platform Module System</link>.
+        Starting from &binding.impl.name.full; supports JPMS and can be loaded and used from module path.
+        There are only a few things to be aware of.
+    </para>
+
+    <section xml:id="Jaxb_pojo_openness">
+        <title>&binding.impl.name; classes openness</title>
+        <para>
+        &binding.impl.name; does reflectively access private members of the class, so client application if loaded from module path
+            needs to "open" packages containing jaxb classes to &binding.spec.name;. There are alternative &binding.spec.name; implementations,
+            having different module names, &binding.spec.name; requires pojo classes to be open only to API module.
+        <example><title>JPMS module descriptor opening &binding.spec.name; pojo classes to &binding.spec.name; API</title>
+
+            <programlisting language="java"><![CDATA[
+                //JPMS module descriptor
+                module com.example.jaxbclasses {
+
+                //Jakarta XML Binding module name
+                requires jakarta.xml.bind;
+
+                //open jaxb pojo package to make accessing private members possible for &binding.spec.name;.
+                opens com.example.jaxbclasses.pojos to jakarta.xml.bind;
+
+             ]]></programlisting>
+        </example>
+        &binding.spec.name; API will delegate openness to implementation module after resolving it with service discovery mechanism.
+        </para>
+    </section>
+
+    <section xml:id="Command-line-examples">
+
+        <para>
+            <example><title>&binding.impl.name; on JPMS Command line examples</title>
+                <programlisting language="java"><![CDATA[
+                #Both client and &binding.impl.name; on module path:
+                user@host: java -m com.example.jaxbclasses/com.example.jaxb.Main
+                --module-path jaxbclient.jar:jakarta.xml.bind-api.jar:jaxb-impl.jar
+
+                #Both client and &binding.impl.name; on classpath:
+                java com.example.jaxb.Main -cp jaxbclient.jar:jakarta.xml.bind-api.jar:jaxb-impl.jar
+
+                #Client on classpath, &binding.impl.name; on module path:
+                user@host: java com.example.jaxb.Main -cp jaxbclient.jar --module-path jakarta.xml.bind-api.jar:jaxb-impl.jar
+                --add-modules jakarta.xml.bind
+
+             ]]></programlisting>
+            </example>
+            &binding.spec.name; API will delegate openness to implementation module after resolving it with service discovery mechanism.
+        </para>
+    </section>
+</section>
