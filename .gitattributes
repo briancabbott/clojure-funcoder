@@ -1,0 +1,2 @@
+Projects/MboxExtractor/resources/code/Mozilla-Thunderbird/comm-central-d146b4e2061c.zip filter=lfs diff=lfs merge=lfs -text
+Projects/MboxExtractor/resources/code/Mozilla-Thunderbird/mozilla-central-dadc7312128e.zip filter=lfs diff=lfs merge=lfs -text
