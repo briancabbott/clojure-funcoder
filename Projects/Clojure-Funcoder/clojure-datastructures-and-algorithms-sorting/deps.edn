@@ -1,0 +1,11 @@
+{:paths ["src"],
+
+ :deps {org.clojure/clojure {:mvn/:version "1.10.2-master-SNAPSHOT"}},
+
+ :aliases
+   {:deps  {:extra-deps       {org.clojure/tools.deps.alpha {:mvn/:version "0.8.696-SNAPSHOT"}}},
+    :test  {:extra-paths      ["test"]}},
+
+ :mvn/repos
+   {"central" {:url "https://repo1.maven.org/maven2/"},
+    "clojars" {:url "https://repo.clojars.org/"}}}
