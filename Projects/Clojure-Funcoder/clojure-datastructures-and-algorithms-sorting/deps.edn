@@ -4,7 +4,8 @@
 
  :aliases
    {:deps  {:extra-deps       {org.clojure/tools.deps.alpha {:mvn/:version "0.8.696-SNAPSHOT"}}},
-    :test  {:extra-paths      ["test"]}},
+    :test  {:extra-paths      ["test"]}
+    :run    :extra-deps        {clojure-funcoder/clojure-datastructures-and-algorithms-sorting {:mvn/version "0.1.0"}}},
 
  :mvn/repos
    {"central" {:url "https://repo1.maven.org/maven2/"},
